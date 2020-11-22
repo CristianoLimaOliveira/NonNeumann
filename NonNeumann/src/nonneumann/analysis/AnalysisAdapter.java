@@ -117,7 +117,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTTiposDados(TTiposDados node)
+    public void caseTTipoInt(TTipoInt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTTipoReal(TTipoReal node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTTipoBool(TTipoBool node)
     {
         defaultCase(node);
     }
@@ -135,7 +147,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTCondicional(TCondicional node)
+    public void caseTSe(TSe node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTEntao(TEntao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSenao(TSenao node)
     {
         defaultCase(node);
     }
@@ -153,7 +177,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTOperadoresComparacao(TOperadoresComparacao node)
+    public void caseTIgual(TIgual node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMenorQue(TMenorQue node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMaiorQue(TMaiorQue node)
     {
         defaultCase(node);
     }
@@ -183,7 +219,31 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTOperadoresAritmeticos(TOperadoresAritmeticos node)
+    public void caseTSoma(TSoma node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSubt(TSubt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMult(TMult node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTDiv(TDiv node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMod(TMod node)
     {
         defaultCase(node);
     }

@@ -6,21 +6,7 @@ Helpers
  rc = 13;
  nl = 10;
  tab = 9;
- letra = [['a'..'z'] + ['A'..'Z']] ;
- soma = '+';
- subt_negacao = '-';
- mult = '*';
- div = '/';
- mod = '%';
- igual = '=';
- menor_que = '<';
- maior_que = '>';
- se = 'if';
- entao = 'then';
- senao = 'else';
- tipo_int = 'int';
- tipo_real = 'real';
- tipo_bool = 'bool';
+ letra = [['a'..'z'] + ['A'..'Z']];
  hexad = ['0'..'9'] | ['A'..'F'] | ['a'..'f'];
  
 Tokens
@@ -32,21 +18,30 @@ Tokens
  funcao_unica = 'lambda';
  col_esq = '[';
  col_dir = ']';
- tipos_dados = tipo_int | tipo_real | tipo_bool;
+ tipo_int = 'int';
+ tipo_real = 'real';
+ tipo_bool = 'bool';
  virgula = ',';
  dois_pontos = ':';
- condicional = se | entao | senao;
+ se = 'if';
+ entao = 'then';
+ senao = 'else';
  verdade = 'true';
  falso = 'false';
- operadores_comparacao = igual | menor_que | maior_que;
+ igual = '=';
+ menor_que = '<';
+ maior_que = '>';
  negacao_booleana = '!';
  operadores_logicos = 'and' | 'or';
- numero_real = (digito)+ '.' (digito)+ | (digito)+ 'E' subt_negacao (digito)+; 
- numero_inteiro = digito+ | '0x' (hexad)+;
- operadores_aritmeticos = soma | subt_negacao | mult | div | mod; 
+ numero_real = '-'? (digito)+ '.' (digito)+ | (digito)+ 'E' '-'? (digito)+; 
+ numero_inteiro = '-'? digito+ | '0x' (hexad)+;
+ soma = '+';
+ subt = '-';
+ mult = '*';
+ div = '/';
+ mod = '%'; 
  identificador = (letra | '_')+ ;
  vazio = (espaco | rc | nl | tab)+;
-
 
 Ignored Tokens
  vazio;
