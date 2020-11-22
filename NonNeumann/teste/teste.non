@@ -1,0 +1,21 @@
+(function real num_pi ():
+	(
+		(
+			(const real PI (3.14159))
+		)
+	)
+)
+
+(function real area (real raio, raio_quadrado(real)):
+	(
+		if (raio=0) then
+			raio
+		else
+			raio_quadrado(raio)*num_pi()
+	)
+)
+entry (function real main():
+	(
+		area(2, lambda(raio_quadrado):(2*raio_quadrado)[])
+	)
+)
