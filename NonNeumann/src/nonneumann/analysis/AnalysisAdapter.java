@@ -75,6 +75,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTParEsq(TParEsq node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTParDir(TParDir node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTFuncao(TFuncao node)
     {
         defaultCase(node);
@@ -93,7 +105,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTDoisPontos(TDoisPontos node)
+    public void caseTColEsq(TColEsq node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTColDir(TColDir node)
     {
         defaultCase(node);
     }
@@ -111,6 +129,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTDoisPontos(TDoisPontos node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTCondicional(TCondicional node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTVerdade(TVerdade node)
     {
         defaultCase(node);
@@ -118,6 +148,24 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTFalso(TFalso node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOperadoresComparacao(TOperadoresComparacao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTNegacaoBooleana(TNegacaoBooleana node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOperadoresLogicos(TOperadoresLogicos node)
     {
         defaultCase(node);
     }
@@ -135,49 +183,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTCondicional(TCondicional node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTOperadoresAritmeticos(TOperadoresAritmeticos node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOperadoresComparacao(TOperadoresComparacao node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOperadoresLogicos(TOperadoresLogicos node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTParEsq(TParEsq node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTParDir(TParDir node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTColEsq(TColEsq node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTColDir(TColDir node)
     {
         defaultCase(node);
     }
