@@ -147,19 +147,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTSe(TSe node)
+    public void caseTNegacaoBooleana(TNegacaoBooleana node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseTEntao(TEntao node)
+    public void caseTE(TE node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseTSenao(TSenao node)
+    public void caseTOu(TOu node)
     {
         defaultCase(node);
     }
@@ -195,30 +195,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTNegacaoBooleana(TNegacaoBooleana node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOperadoresLogicos(TOperadoresLogicos node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTNumeroReal(TNumeroReal node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTNumeroInteiro(TNumeroInteiro node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTSoma(TSoma node)
     {
         defaultCase(node);
@@ -244,6 +220,36 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTMod(TMod node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSe(TSe node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTEntao(TEntao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSenao(TSenao node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTNumeroReal(TNumeroReal node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTNumeroInteiro(TNumeroInteiro node)
     {
         defaultCase(node);
     }
