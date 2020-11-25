@@ -13,6 +13,7 @@ public interface Analysis extends Switch
 
     void caseTComentLinha(TComentLinha node);
     void caseTComentBox(TComentBox node);
+    void caseTEntrar(TEntrar node);
     void caseTParEsq(TParEsq node);
     void caseTParDir(TParDir node);
     void caseTFuncao(TFuncao node);

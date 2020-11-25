@@ -1,6 +1,49 @@
-{- a  -oi}       
+( function int fib (int x):
+	( if(x=0) then 0 else
+		 if(x=1) then 1 else
+			 fib(x-1) + fib(x-2) 
+		
+	)
+)
+entry ( function int main () : ( fib(15) ) )
 
+;Area e perimetro
+(function real num_pi ():
+	(
+		(
+			(const real PI (3.14159))
+		)
+	)
+)
 
+(function real area (real raio, raio_quadrado(real)):
+	(
+		if (raio=0) then
+			raio
+		else
+			raio_quadrado(raio)*num_pi()
+	)
+)
+entry (function real main():
+	(
+		area(2, lambda(raio_quadrado):(2*raio_quadrado)[])
+	)
+)
 
-  -}		
-; teste		
+(function real calculo_depreciacao (real valor_inicial, int anos) :
+	(
+		if(anos>10) then
+			valor_inicial-valor_inicial/2
+		else
+			valor_inicial-valor_inicial*anos*5/100
+	)
+)
+{-
+	A função acima calcula o valor de depreciação de um veículo ao longo dos anos.
+	O veículo em questão desvaloriza 5% ao ano, num máximo de 10 anos (ou 50%) do valor original
+-}
+entry (function real depreciacao():
+	(
+		calculo_depreciacao(754323E-2, 5)
+	)
+)

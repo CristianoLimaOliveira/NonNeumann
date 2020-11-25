@@ -81,6 +81,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTEntrar(TEntrar node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTParEsq(TParEsq node)
     {
         defaultCase(node);

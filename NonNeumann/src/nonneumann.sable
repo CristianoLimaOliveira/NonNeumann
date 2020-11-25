@@ -17,6 +17,7 @@ Helpers
  Tokens
  coment_linha = pt_virg (tudo_semnl)+ nl; 
  coment_box =  esq_boxcoment (tudo)+ dir_boxcoment;
+ entrar = 'entry';
  par_esq = '(';
  par_dir = ')';
  funcao = 'function';
@@ -45,8 +46,8 @@ Helpers
  se = 'if';
  entao = 'then';
  senao = 'else';
- numero_real = 'E' '-'? (digito)+ '.' (digito)+ | 'E' '-'? (digito)+ 'E' '-' (digito)+; 
- numero_inteiro = '-'? digito+ | '0x' (hexad)+;
+ numero_real = '-'? (digito)+ '.' (digito)+ | '-'? (digito)+ 'E' '-'? (digito)+; 
+ numero_inteiro = '-'? (digito)+ | '0x' (hexad)+;
  identificador = (letra | '_')+ ;
  vazio = (espaco | rc | nl | tab)+;
  
