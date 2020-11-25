@@ -51,5 +51,8 @@ Helpers
  vazio = (espaco | rc | nl | tab)+;
  
 Ignored Tokens
- vazio;
+ vazio, coment_linha, coment_box;
+ 
+ 
+ 
  
