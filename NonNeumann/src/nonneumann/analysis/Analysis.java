@@ -11,7 +11,8 @@ public interface Analysis extends Switch
     Object getOut(Node node);
     void setOut(Node node, Object o);
 
-    void caseTEntrar(TEntrar node);
+    void caseTComentLinha(TComentLinha node);
+    void caseTComentBox(TComentBox node);
     void caseTParEsq(TParEsq node);
     void caseTParDir(TParDir node);
     void caseTFuncao(TFuncao node);

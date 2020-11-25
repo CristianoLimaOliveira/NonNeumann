@@ -5,16 +5,16 @@ package nonneumann.node;
 import nonneumann.analysis.*;
 
 @SuppressWarnings("nls")
-public final class EOF extends Token
+public final class TComentBox extends Token
 {
-    public EOF()
+    public TComentBox(String text)
     {
-        setText("");
+        setText(text);
     }
 
-    public EOF(int line, int pos)
+    public TComentBox(String text, int line, int pos)
     {
-        setText("");
+        setText(text);
         setLine(line);
         setPos(pos);
     }
@@ -22,12 +22,12 @@ public final class EOF extends Token
     @Override
     public Object clone()
     {
-        return new EOF(getLine(), getPos());
+      return new TComentBox(getText(), getLine(), getPos());
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseEOF(this);
+        ((Analysis) sw).caseTComentBox(this);
     }
 }

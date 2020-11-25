@@ -69,7 +69,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTEntrar(TEntrar node)
+    public void caseTComentLinha(TComentLinha node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTComentBox(TComentBox node)
     {
         defaultCase(node);
     }
