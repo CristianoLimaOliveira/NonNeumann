@@ -13,13 +13,13 @@ Helpers
  tudo_semnl = [tudo - [nl + rc]];
  nova_linha = [nl + rc];
  tudo_notraco = [tudo - '-'];
- sem_star_fecha = [tudo -['-' + '}']];
+ sem_traco_fecha = [tudo -['-' + '}']];
  esq_boxcoment = '{-';
  dir_boxcoment = '-}';  
  
  Tokens
  coment_linha = pt_virg (tudo_semnl)* nova_linha+; 
- coment_box =  esq_boxcoment tudo_notraco* '-' (sem_star_fecha tudo_notraco* '-'+)* '}';
+ coment_box =  esq_boxcoment tudo_notraco* '-' (sem_traco_fecha tudo_notraco* '-'+)* '}';
  entrar = 'entry';
  par_esq = '(';
  par_dir = ')';

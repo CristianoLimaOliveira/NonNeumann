@@ -1,49 +1,49 @@
-(função int fib (int x):
-	(if (x = 0) then 0 else
-		 if (x = 1) then 1 else
-			 fib (x-1) + fib (x-2) 
+( function int fib (int x):
+	( if(x=0) then 0 else
+		 if(x=1) then 1 else
+			 fib(x-1) + fib(x-2) 
 		
 	)
 )
-entrada (função int main (): (fib (15)))
+entry ( function int main () : ( fib(15) ) )
 
-; Área e perimetro
-(função real num_pi ():
+;Area e perimetro
+(function real raio_quadrado(real raio):
+	(
+		lambda(raio1,raio2):(raio1*raio2)[raio,raio]
+	)
+)
+(function real area (real raio, real r_quadrado(real)):
 	(
 		(
 			(const real PI (3.14159))
+			if (raio=0) then
+				raio
+			else
+				r_quadrado(raio)*PI
 		)
 	)
 )
-
-(função área real (raio real, raio_quadrado (real)):
+entry (function real main(real raio):
 	(
-		se (raio = 0) então
-			raio
-		outro
-			raio_quadrado (raio) * num_pi ()
-	)
-)
-entrada (função real principal ():
-	(
-		área (2, lambda (raio_quadrado) :( 2 * raio_quadrado) [])
+		area(raio, raio_quadrado(raio))
 	)
 )
 
-(função real calculo_depreciacao (real valor_inicial, int anos):
+(function real calculo_depreciacao (real valor_inicial, int anos) :
 	(
-		se (anos> 10) então
-			valor_inicial-valor_inicial / 2
-		outro
-			valor_inicial-valor_inicial * anos * 5/100
+		if(anos>10) then
+			valor_inicial-valor_inicial/2
+		else
+			valor_inicial-valor_inicial*anos*5/100
 	)
 )
 {-
-	A função acima cálculo o valor de depreciação de um veículo ao longo dos anos.
-	O veículo em questão desvaloriza 5% ao ano, num máximo de 10 anos (ou 50%) do valor original
+	A fun��o acima calcula o valor de deprecia��o de um ve�culo ao longo dos anos.
+	O ve�culo em quest�o desvaloriza 5% ao ano, num m�ximo de 10 anos (ou 50%) do valor original
 -}
-entrada (função real depreciacao ():
+entry (function real depreciacao():
 	(
-		calculo_depreciacao (754323E-2, 5)
+		calculo_depreciacao(754323E-2, 5)
 	)
 )
