@@ -1,2 +1,6 @@
+/nonneumann.analysis/
+/nonneumann.lexer/
+/nonneumann.node/
+/nonneumann.parser/
 /.classpath
 /.project

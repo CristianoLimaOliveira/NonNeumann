@@ -7,20 +7,21 @@
 )
 entry ( function int main () : ( fib(15) ) )
 
-;Area e perimetro
+
+;Calculando a area da circunferencia
 (function real raio_quadrado(real raio):
 	(
 		lambda(raio1,raio2):(raio1*raio2)[raio,raio]
 	)
 )
-(function real area (real raio, real r_quadrado(real)):
+(function real area (real raio, real r_quadrado):
 	(
 		(
 			(const real PI (3.14159))
 			if (raio=0) then
 				raio
 			else
-				r_quadrado(raio)*PI
+				r_quadrado*PI
 		)
 	)
 )
@@ -29,6 +30,7 @@ entry (function real main(real raio):
 		area(raio, raio_quadrado(raio))
 	)
 )
+
 
 (function real calculo_depreciacao (real valor_inicial, int anos) :
 	(
