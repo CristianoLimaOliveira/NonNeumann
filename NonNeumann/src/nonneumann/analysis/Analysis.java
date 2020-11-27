@@ -16,6 +16,8 @@ public interface Analysis extends Switch
     void caseTEntrar(TEntrar node);
     void caseTParEsq(TParEsq node);
     void caseTParDir(TParDir node);
+    void caseTColchE(TColchE node);
+    void caseTColchD(TColchD node);
     void caseTFuncao(TFuncao node);
     void caseTConstante(TConstante node);
     void caseTFuncaoUnica(TFuncaoUnica node);

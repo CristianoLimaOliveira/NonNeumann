@@ -99,6 +99,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTColchE(TColchE node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTColchD(TColchD node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTFuncao(TFuncao node)
     {
         defaultCase(node);

@@ -1,6 +1,7 @@
 Package nonneumann;
 
 Helpers
+ tudo = [0..0xffff];
  digito = ['0'..'9'];
  espaco = ' ';
  rc = 13;
@@ -9,17 +10,21 @@ Helpers
  pt_virg = 59;
  letra = [['a'..'z'] + ['A'..'Z']];
  hexad = ['0'..'9'] | ['A'..'F'] | ['a'..'f'];
-  tudo_semnl = [[0..0xffff] - nl];
- tudo = [0..0xffff] ;
+ tudo_semnl = [tudo - [nl + rc]];
+ nova_linha = [nl + rc];
+ tudo_notraco = [tudo - '-'];
+ sem_star_fecha = [tudo -['-' + '}']];
  esq_boxcoment = '{-';
  dir_boxcoment = '-}';  
  
  Tokens
- coment_linha = pt_virg (tudo_semnl)+ nl; 
- coment_box =  esq_boxcoment (tudo)+ dir_boxcoment;
+ coment_linha = pt_virg (tudo_semnl)* nova_linha+; 
+ coment_box =  esq_boxcoment tudo_notraco* '-' (sem_star_fecha tudo_notraco* '-'+)* '}';
  entrar = 'entry';
  par_esq = '(';
  par_dir = ')';
+ colch_e = '{';
+ colch_d = '}';
  funcao = 'function';
  constante = 'const';
  funcao_unica = 'lambda';
