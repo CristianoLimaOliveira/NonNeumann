@@ -59,6 +59,48 @@ Helpers
 Ignored Tokens
  vazio, coment_linha, coment_box;
  
- 
- 
+Productions
+ programa =
+   {declaracao_de_funcao} dec_estrutura_funcao*;
+
+ dec_estrutura_funcao =
+   {declara_estrutura_funcao} entrar? par_esq dec_funcao_esq par_dir;
+
+ dec_funcao_esq =
+   {declara_funcao_lado_esq} funcao tipo identificador par_esq parametros par_dir dec_funcao_dir;
+   
+ dec_funcao_dir =
+   {declara_funcao_lado_dir} dois_pontos par_esq par_dir;
+
+ tipo =
+   {inteiro} tipo_int 
+  |{real} tipo_real
+  |{boolean} tipo_bool;
+
+ parametros =
+   {declarando_parametros} parametro cont_parametros;
+
+ cont_parametros =
+   {declarando_mais_parametros} virgula parametros
+  | ;
+
+ parametro =
+   {parametro_simples} tipo identificador
+  |{parametro_assinatura} assinatura
+  | ;
+
+ assinatura =
+   {assina} tipo identificador par_esq parametros_assinatura par_dir;
+
+ parametros_assinatura =
+   {param_assinatura} parametro_assinatura cont_parametros_assinatura
+  | ;
+  
+ cont_parametros_assinatura =
+   {declarando_mais_param_assinatura} virgula parametros_assinatura
+  | ;
+
+ parametro_assinatura =
+   {forma_tipo_assinatura} tipo
+  |{nova_assinatura} assinatura;
  
