@@ -105,44 +105,43 @@ Productions
   |{nova_assinatura} assinatura;
  
  exp =
-   {comeco} estru_cond
-   | ;
+   {comeco} estru_cond;
 
  estru_cond =
-   {estru_se_senao} se bloco_exp estru_cond_entao senao exp
-  |{ir_logico_ou} logico_ou;
+   {ir_logico_ou} logico_ou
+  |{estru_se_senao} se bloco_exp estru_cond_entao senao exp;
 
  estru_cond_entao =
    {estru_entao} entao exp;
 
  logico_ou =
-   {op_ou} logico_ou ou logico_e
-  |{ir_logico_e} logico_e;
+   {ir_logico_e} logico_e
+  |{op_ou} logico_ou ou logico_e;
 
  logico_e =
-   {op_e} logico_e e logico_negacao
-  |{ir_logico_negacao} logico_negacao;
+   {ir_logico_negacao} logico_negacao
+  |{op_e} logico_e e logico_negacao;
   
  logico_negacao =
-   {op_neg} negacao_booleana relacionais
-  |{ir_relacionais} relacionais;
+   {ir_relacionais} relacionais
+  |{op_neg} negacao_booleana relacionais;
 
  relacionais =
-   {op_menor_que} relacionais menor_que aritmeticos
+   {ir_aritmeticos} aritmeticos
+  |{op_menor_que} relacionais menor_que aritmeticos
   |{op_maior_que} relacionais maior_que aritmeticos
-  |{op_iguais} relacionais igual aritmeticos
-  |{ir_aritmeticos} aritmeticos;
+  |{op_iguais} relacionais igual aritmeticos;
  
  aritmeticos =
-   {soma} aritmeticos soma cont_aritmeticos
-  |{subtracao} aritmeticos? subt cont_aritmeticos
-  |{prox_aritmeticos} cont_aritmeticos;
+   {prox_aritmeticos} cont_aritmeticos
+  |{soma} aritmeticos soma cont_aritmeticos
+  |{subtracao} aritmeticos? subt cont_aritmeticos;
   
  cont_aritmeticos =
-   {multiplicacao} cont_aritmeticos mult termos
+   {ir_termos} termos
+  |{multiplicacao} cont_aritmeticos mult termos
   |{divisao} cont_aritmeticos div termos
-  |{modulo} cont_aritmeticos mod termos
-  |{ir_termos} termos;
+  |{modulo} cont_aritmeticos mod termos;
   
  termos =
    {num_inteiros} numero_inteiro
