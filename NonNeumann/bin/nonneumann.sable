@@ -23,8 +23,8 @@ Helpers
  entrar = 'entry';
  par_esq = '(';
  par_dir = ')';
- colch_e = '{';
- colch_d = '}';
+ colch_e = '[';
+ colch_d = ']';
  funcao = 'function';
  constante = 'const';
  funcao_unica = 'lambda';
@@ -70,7 +70,7 @@ Productions
    {declara_funcao_lado_esq} funcao tipo identificador par_esq parametros par_dir dec_funcao_dir;
    
  dec_funcao_dir =
-   {declara_funcao_lado_dir} dois_pontos par_esq par_dir;
+   {declara_funcao_lado_dir} dois_pontos par_esq exp par_dir;
 
  tipo =
    {inteiro} tipo_int 
@@ -104,3 +104,84 @@ Productions
    {forma_tipo_assinatura} tipo
   |{nova_assinatura} assinatura;
  
+ exp =
+   {comeco} estru_cond
+   | ;
+
+ estru_cond =
+   {estru_se_senao} se bloco_exp estru_cond_entao senao exp
+  |{ir_logico_ou} logico_ou;
+
+ estru_cond_entao =
+   {estru_entao} entao exp;
+
+ logico_ou =
+   {op_ou} logico_ou ou logico_e
+  |{ir_logico_e} logico_e;
+
+ logico_e =
+   {op_e} logico_e e logico_negacao
+  |{ir_logico_negacao} logico_negacao;
+  
+ logico_negacao =
+   {op_neg} negacao_booleana relacionais
+  |{ir_relacionais} relacionais;
+
+ relacionais =
+   {op_menor_que} relacionais menor_que aritmeticos
+  |{op_maior_que} relacionais maior_que aritmeticos
+  |{op_iguais} relacionais igual aritmeticos
+  |{ir_aritmeticos} aritmeticos;
+ 
+ aritmeticos =
+   {soma} aritmeticos soma cont_aritmeticos
+  |{subtracao} aritmeticos? subt cont_aritmeticos
+  |{prox_aritmeticos} cont_aritmeticos;
+  
+ cont_aritmeticos =
+   {multiplicacao} cont_aritmeticos mult termos
+  |{divisao} cont_aritmeticos div termos
+  |{modulo} cont_aritmeticos mod termos
+  |{ir_termos} termos;
+  
+ termos =
+   {num_inteiros} numero_inteiro
+  |{num_reais} numero_real
+  |{identificador_param} identificador
+  |{bool_verdade} verdade
+  |{bool_falso} falso
+  |{bloco_expressao} bloco_exp
+  |{chamada_func} chamada
+  |{func_unica_lambda} lambda;
+
+ lambda =
+   {lado_esq_func} funcao_unica par_esq lista_ids par_dir lambda_dir;
+   
+ lambda_dir =
+   {lado_dir_func} dois_pontos par_esq exp par_dir colch_e lista_exp colch_d;
+  
+ chamada =
+   {estrut_chamada} identificador par_esq lista_exp par_dir;
+   
+ lista_exp =
+   {novo_exp} exp cont_exp;
+ 
+ cont_exp =
+   {mais_exp} virgula lista_exp
+  | ;
+
+ lista_ids =
+   {novo_id} identificador cont_ids;
+ 
+ cont_ids =
+   {mais_ids} virgula lista_ids
+  | ;
+  
+ bloco_exp =
+   {estrutura} par_esq dec_cons* exp par_dir;
+
+ dec_cons =
+   {estrutura_constante} par_esq conteudo_cons par_dir;
+   
+ conteudo_cons =
+   {conteudo_declaracao_cons} constante tipo identificador par_esq exp par_dir;
