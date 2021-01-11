@@ -51,8 +51,8 @@ Helpers
  se = 'if';
  entao = 'then';
  senao = 'else';
- numero_real = '-'? (digito)+ '.' (digito)+ | '-'? (digito)+ 'E' '-'? (digito)+; 
- numero_inteiro = '-'? (digito)+ | '0x' (hexad)+;
+ numero_real = (digito)+ '.' (digito)+ | (digito)+ 'E' '-'? (digito)+; 
+ numero_inteiro = (digito)+ | '0x' (hexad)+;
  identificador = (letra | '_')+ ;
  vazio = (espaco | rc | nl | tab)+;
  

@@ -14,20 +14,20 @@ entry ( function int main () : ( fib(15) ) )
 		lambda(raio_um,raio_dois):(raio_um*raio_dois)[raio,raio]
 	)
 )
-(function real area (real raio, real r_quadrado):
+(function real area (real raio, real r_quadrado(real)):
 	(
 		(
 			(const real PI (3.14159))
 			if (raio=0) then
 				raio
 			else
-				r_quadrado*PI
+				r_quadrado(raio)*PI
 		)
 	)
 )
 entry (function real main(real raio):
 	(
-		area(raio, raio_quadrado(raio))
+		area(raio, raio_quadrado)
 	)
 )
 
