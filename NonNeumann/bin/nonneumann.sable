@@ -28,8 +28,6 @@ Helpers
  funcao = 'function';
  constante = 'const';
  funcao_unica = 'lambda';
- col_esq = '[';
- col_dir = ']';
  tipo_int = 'int';
  tipo_real = 'real';
  tipo_bool = 'bool';
