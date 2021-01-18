@@ -23,11 +23,31 @@ Helpers
  entrar = 'entry';
  par_esq = '(';
  par_dir = ')';
+ 
+ /* ALTERAÇÃO! Bem no início do projeto, eu achei que as chaves seriam tokens, mas percebi que
+               elas apenas indicavam o fecho. Então alterei as chaves pelos colchetes,
+               mas acabei trocando os nomes e mantendo sem perceber os símbolos de chaves que
+               estavam entre aspas simples. O que me fez confundir e criar depois outros tokens
+               para colchetes, sendo que estes já deveriam ter virados tokens para colchetes.
+ colch_e = '{';
+ colch_d = '}';
+ */
+ 
  colch_e = '[';
  colch_d = ']';
  funcao = 'function';
  constante = 'const';
  funcao_unica = 'lambda';
+ 
+ /* ALTERAÇÃO! Como eu não alterei os símbolos de chaves pelos símbolos de colchetes anteriormente,
+               então acabei criando novos tokens para os colchetes. Sendo que já eram pra existir,
+               ao ter feito a subtituição no lugar das chaves. Então, esses novos tokens eu deletei
+               e mantive apenas os tokens de colchetes anteriores, e com os símbolos entres aspas simples
+               corrigidos para colchetes ao invés de chaves.
+ col_esq = '[';
+ col_dir = ']';
+ */
+ 
  tipo_int = 'int';
  tipo_real = 'real';
  tipo_bool = 'bool';
@@ -49,6 +69,18 @@ Helpers
  se = 'if';
  entao = 'then';
  senao = 'else';
+ 
+ /* ALTERAÇÃO! Durante a primeira etapa encontrei um problema que era: -2 não era identificado como um
+               número inteiro, e -3.14 não era identificado como um número real.
+               Então para consertar isso, coloquei o símbolo '-' como opcional antes da digitação do
+               valor. Mas ao desenvolver o sintático, existiu um conflito entre o token subt na produção
+               de subtração, e o '-' opcional que estava na expressão regular dos números.
+               Então, tive que remover esse '-' da expressão regular, deixando para o sintático e
+               posteriormente o semântico cuidar disto.
+ numero_real = '-'? (digito)+ '.' (digito)+ | '-'? (digito)+ 'E' '-'? (digito)+; 
+ numero_inteiro = '-'? (digito)+ | '0x' (hexad)+;
+ */
+ 
  numero_real = (digito)+ '.' (digito)+ | (digito)+ 'E' '-'? (digito)+; 
  numero_inteiro = (digito)+ | '0x' (hexad)+;
  identificador = (letra | '_')+ ;
