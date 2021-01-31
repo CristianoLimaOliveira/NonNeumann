@@ -94,7 +94,8 @@ Productions
    {declaracao_de_funcao} dec_estrutura_funcao*;
 
  dec_estrutura_funcao =
-   {declara_estrutura_funcao} entrar? par_esq dec_funcao_esq par_dir;
+   {declara_estrutura_funcao_entry} entrar par_esq dec_funcao_esq par_dir
+  |{declara_estrutura_funcao} par_esq dec_funcao_esq par_dir;
 
  dec_funcao_esq =
    {declara_funcao_lado_esq} funcao tipo identificador par_esq parametros par_dir dec_funcao_dir;
@@ -165,7 +166,8 @@ Productions
  aritmeticos =
    {prox_aritmeticos} cont_aritmeticos
   |{soma} aritmeticos soma cont_aritmeticos
-  |{subtracao} aritmeticos? subt cont_aritmeticos;
+  |{subtracao} aritmeticos subt cont_aritmeticos
+  |{negacao_aritmetica} subt cont_aritmeticos;
   
  cont_aritmeticos =
    {ir_termos} termos
