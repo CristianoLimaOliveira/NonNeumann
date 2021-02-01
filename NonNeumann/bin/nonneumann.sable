@@ -97,10 +97,10 @@ Productions
    {declaracao_de_funcao} dec_funcao* {-> [dec_funcao.a_dec_funcao]};
 
  dec_funcao {-> a_dec_funcao} =
-   {declara_funcao} entrar? [par_um_e]:par_esq funcao [esq]:tipo [mid_esq]:id [par_dois_e]:par_esq [mid_dir]:parametros? [par_dois_d]:par_dir dois_pontos [par_tres_e]:par_esq [dir]:exp [par_tres_d]:par_dir[par_um_d]:par_dir {-> New a_dec_funcao.a_declara_funcao(esq.a_tipo, mid_esq.a_id, [mid_dir.a_parametros], dir.a_exp)};
+   {declara_funcao} entrar? [par_um_e]:par_esq funcao [esq]:tipo [mid_esq]:id [par_dois_e]:par_esq [mid_dir]:parametros? [par_dois_d]:par_dir dois_pontos [par_tres_e]:par_esq [dir]:exp [par_tres_d]:par_dir[par_um_d]:par_dir {-> New a_dec_funcao.a_declara_funcao(esq.a_tipo, mid_esq.a_exp, [mid_dir.a_parametros], dir.a_exp)};
 
- id {-> a_id} =
-   {identificadores} identificador {-> New a_id.a_identificadores(identificador)};
+ id {-> a_exp} =
+   {identificadores} identificador {-> New a_exp.a_identificador(identificador)};
 
  tipo {-> a_tipo} =
    {inteiro} tipo_int {-> New a_tipo.a_inteiro(tipo_int)}
@@ -114,11 +114,11 @@ Productions
    {declarando_mais_parametros} virgula parametro {-> parametro.a_parametros};
 
  parametro {-> a_parametros} =
-   {parametro_simples} [esq]:tipo [dir]:id {-> New a_parametros.a_parametros_simples(esq.a_tipo, dir.a_id)}
+   {parametro_simples} [esq]:tipo [dir]:id {-> New a_parametros.a_parametros_simples(esq.a_tipo, dir.a_exp)}
   |{parametro_assinatura} assinatura {-> assinatura.a_parametros};
 
  assinatura {-> a_parametros} =
-   {assina} [esq]:tipo [mid]:id par_esq [dir]:parametros_assinatura? par_dir {-> New a_parametros.a_parametro_assinatura(esq.a_tipo, mid.a_id, [dir.a_parametros_assinatura])};
+   {assina} [esq]:tipo [mid]:id par_esq [dir]:parametros_assinatura? par_dir {-> New a_parametros.a_parametro_assinatura(esq.a_tipo, mid.a_exp, [dir.a_parametros_assinatura])};
 
  parametros_assinatura {-> a_parametros_assinatura*} =
    {param_assinatura} parametro_assinatura cont_parametros_assinatura* {-> [parametro_assinatura.a_parametros_assinatura, cont_parametros_assinatura.a_parametros_assinatura]};
@@ -129,14 +129,48 @@ Productions
  parametro_assinatura {-> a_parametros_assinatura} =
    {forma_tipo_assinatura} tipo {-> New a_parametros_assinatura.a_forma_tipo_assinatura(tipo.a_tipo)}
   |{nova_assinatura} assinatura {-> New a_parametros_assinatura.a_nova_assinatura(assinatura.a_parametros)};
+ 
+ exp {-> a_exp} =         
+   {comeco} estru_cond {-> estru_cond.a_exp};
 
- exp {-> a_exp} =
-   {ir_termos} termos {-> termos.a_exp};
+ estru_cond {-> a_exp} =
+   {ir_logico_ou} logico_ou {-> logico_ou.a_exp}
+  |{estru_se_senao} se [dir]:bloco_exp entao [mid]:exp senao [esq]:exp {-> New a_exp.a_se_cond(esq.a_exp, mid.a_exp, dir.a_exp)};
+
+ logico_ou {-> a_exp} =
+   {ir_logico_e} logico_e {-> logico_e.a_exp}
+  |{op_ou} [esq]:logico_ou ou [dir]:logico_e {-> New a_exp.a_op_ou(esq.a_exp, dir.a_exp)};
+
+ logico_e {-> a_exp} =
+   {ir_logico_negacao} logico_negacao {-> logico_negacao.a_exp}
+  |{op_e} [esq]:logico_e e [dir]:logico_negacao {-> New a_exp.a_op_e(esq.a_exp, dir.a_exp)};
+  
+ logico_negacao {-> a_exp} =
+   {ir_relacionais} relacionais {-> relacionais.a_exp}
+  |{op_neg} negacao_booleana relacionais {-> New a_exp.a_op_neg(relacionais.a_exp)};
+
+ relacionais {-> a_exp} =
+   {ir_aritmeticos} aritmeticos {-> aritmeticos.a_exp}
+  |{op_menor_que} [esq]:relacionais menor_que [dir]:aritmeticos {-> New a_exp.a_op_menor_que(esq.a_exp, dir.a_exp)}
+  |{op_maior_que} [esq]:relacionais maior_que [dir]:aritmeticos {-> New a_exp.a_op_maior_que(esq.a_exp, dir.a_exp)}
+  |{op_iguais} [esq]:relacionais igual [dir]:aritmeticos {-> New a_exp.a_op_iguais(esq.a_exp, dir.a_exp)};
+ 
+ aritmeticos {-> a_exp} =
+   {prox_aritmeticos} cont_aritmeticos {-> cont_aritmeticos.a_exp}
+  |{soma} [esq]:aritmeticos soma [dir]:cont_aritmeticos {-> New a_exp.a_soma(esq.a_exp, dir.a_exp)}
+  |{subtracao} [esq]:aritmeticos subt [dir]:cont_aritmeticos {-> New a_exp.a_subtracao(esq.a_exp, dir.a_exp)}
+  |{negacao_aritmetica} subt cont_aritmeticos {-> New a_exp.a_negacao_aritmetica(cont_aritmeticos.a_exp)};
+  
+ cont_aritmeticos {-> a_exp} =
+   {ir_termos} termos {-> termos.a_exp}
+  |{multiplicacao} [esq]:cont_aritmeticos mult [dir]:termos {-> New a_exp.a_multiplicacao(esq.a_exp, dir.a_exp)}
+  |{divisao} [esq]:cont_aritmeticos div [dir]:termos {-> New a_exp.a_divisao(esq.a_exp, dir.a_exp)}
+  |{modulo} [esq]:cont_aritmeticos mod [dir]:termos {-> New a_exp.a_modulo(esq.a_exp, dir.a_exp)};
    
  termos {-> a_exp} =
    {num_inteiros} numero_inteiro {-> New a_exp.a_num_inteiros(numero_inteiro)}
   |{num_reais} numero_real {-> New a_exp.a_num_reais(numero_real)}
-  |{identificador_param} id {-> New a_exp.a_identificador(id.a_id)}
+  |{identificador_param} id {-> id.a_exp}
   |{bool_verdade} verdade {-> New a_exp.a_bool_verdade(verdade)}
   |{bool_falso} falso {-> New a_exp.a_bool_falso(falso)}
   |{bloco_expressao} bloco_exp {-> bloco_exp.a_exp}
@@ -147,15 +181,15 @@ Productions
    {const} constante {-> New a_constante.a_const(constante)};
    
  chamada {-> a_exp} =
-   {estrut_chamada} [esq]:id par_esq [dir]:lista_exp? par_dir {-> New a_exp.a_chamada(esq.a_id, [dir.a_exp])};
+   {estrut_chamada} [esq]:id par_esq [dir]:lista_exp? par_dir {-> New a_exp.a_chamada(esq.a_exp, [dir.a_exp])};
  
  lista_exp {-> a_exp*} =
    {lista_exp} [esq]:exp virgula [dir]:lista_exp {-> [esq.a_exp, dir.a_exp]} |
    {exp} exp {-> [exp.a_exp]};
       
- lista_id {-> a_id*} =
-   {lista_id} [esq]:id virgula [dir]:lista_id {-> [esq.a_id, dir.a_id]} |
-   {id} id {-> [id.a_id]};
+ lista_id {-> a_exp*} =
+   {lista_id} [esq]:id virgula [dir]:lista_id {-> [esq.a_exp, dir.a_exp]} |
+   {id} id {-> [id.a_exp]};
  
  bloco_exp {-> a_exp} =
    {estrutura} par_esq [esq]:lista_dec_cons* [dir]:exp par_dir {-> New a_exp.a_bloco_exp([esq.a_dec_cons], dir.a_exp)};
@@ -164,29 +198,28 @@ Productions
    {lista_dec_cons} dec_cons {-> [dec_cons.a_dec_cons]};
 
  lambda {-> a_exp} =
-   {func_unica_lambda} funcao_unica [par_e_um]:par_esq [esq]:lista_id? [par_d_um]:par_dir dois_pontos [par_e_dois]:par_esq [mid]:exp [par_d_dois]:par_dir colch_e [dir]:lista_exp? colch_d {-> New a_exp.a_func_unica_lambda([esq.a_id], mid.a_exp, [dir.a_exp])};
+   {func_unica_lambda} funcao_unica [par_e_um]:par_esq [esq]:lista_id? [par_d_um]:par_dir dois_pontos [par_e_dois]:par_esq [mid]:exp [par_d_dois]:par_dir colch_e [dir]:lista_exp? colch_d {-> New a_exp.a_func_unica_lambda([esq.a_exp], mid.a_exp, [dir.a_exp])};
 
  dec_cons {-> a_dec_cons} =
-   {estrutura_constante} [par_um_e]:par_esq constante [esq]:tipo [mid]:id [par_dois_e]:par_esq [dir]:exp [par_dois_d]:par_dir [par_um_d]:par_dir {-> New a_dec_cons.a_estrutura_constante(esq.a_tipo, mid.a_id, dir.a_exp)};
-
+   {estrutura_constante} [par_um_e]:par_esq constante [esq]:tipo [mid]:id [par_dois_e]:par_esq [dir]:exp [par_dois_d]:par_dir [par_um_d]:par_dir {-> New a_dec_cons.a_estrutura_constante(esq.a_tipo, mid.a_exp, dir.a_exp)};
 
 Abstract Syntax Tree
 programa =
    a_dec_funcao*;
 
 a_dec_funcao = 
-	{a_declara_funcao} [esq]:a_tipo [mid_esq]:a_id [mid_dir]:a_parametros* [dir]:a_exp;
+	{a_declara_funcao} [esq]:a_tipo [mid_esq]:a_exp [mid_dir]:a_parametros* [dir]:a_exp;
 
 a_parametros =
-	{a_parametros_simples} [esq]:a_tipo [dir]:a_id
-	|{a_parametro_assinatura} [esq]:a_tipo [mid]:a_id [dir]:a_parametros_assinatura*;
+	{a_parametros_simples} [esq]:a_tipo [dir]:a_exp
+	|{a_parametro_assinatura} [esq]:a_tipo [mid]:a_exp [dir]:a_parametros_assinatura*;
 
 a_parametros_assinatura =
 	{a_forma_tipo_assinatura} a_tipo
 	|{a_nova_assinatura} a_parametros;
 
 a_id =
-	{a_identificadores} identificador;
+	{a_identificadores} a_exp;
 
 a_tipo =
 	{a_inteiro} tipo_int 
@@ -197,14 +230,27 @@ a_constante =
 	{a_const} constante;
 	
 a_dec_cons =
-	{a_estrutura_constante}[esq]:a_tipo [mid]:a_id [dir]:a_exp;
+	{a_estrutura_constante}[esq]:a_tipo [mid]:a_exp [dir]:a_exp;
   
 a_exp =
-	{a_num_inteiros} numero_inteiro
+	{a_se_cond} [esq]:a_exp [mid]:a_exp [dir]:a_exp 
+	|{a_soma} [esq]:a_exp [dir]:a_exp 
+	|{a_subtracao} [esq]:a_exp [dir]:a_exp 
+	|{a_multiplicacao} [esq]:a_exp [dir]:a_exp 
+	|{a_divisao} [esq]:a_exp [dir]:a_exp 
+	|{a_modulo} [esq]:a_exp [dir]:a_exp 
+	|{a_op_iguais} [esq]:a_exp [dir]:a_exp 
+	|{a_op_menor_que} [esq]:a_exp [dir]:a_exp
+	|{a_op_maior_que} [esq]:a_exp [dir]:a_exp
+	|{a_negacao_aritmetica} a_exp 
+	|{a_op_neg} a_exp 
+	|{a_op_e} [esq]:a_exp [dir]:a_exp 
+	|{a_op_ou} [esq]:a_exp [dir]:a_exp 
+	|{a_num_inteiros} numero_inteiro
 	|{a_num_reais} numero_real
-	|{a_identificador} a_id
+	|{a_identificador} identificador
 	|{a_bool_verdade} verdade
 	|{a_bool_falso} falso
-	|{a_chamada} [esq]:a_id [dir]:a_exp*
-	|{a_func_unica_lambda} [esq]:a_id* [mid]:a_exp [dir]:a_exp*
+	|{a_chamada} [esq]:a_exp [dir]:a_exp*
+	|{a_func_unica_lambda} [esq]:a_exp* [mid]:a_exp [dir]:a_exp*
 	|{a_bloco_exp}[esq]:a_dec_cons* [dir]:a_exp;
