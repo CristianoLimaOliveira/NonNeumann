@@ -91,128 +91,120 @@ Ignored Tokens
  
 Productions
  programa =
-   {declaracao_de_funcao} dec_estrutura_funcao*;
+   inicio {-> New programa([inicio.a_dec_funcao])};
 
- dec_estrutura_funcao =
-   {declara_estrutura_funcao_entry} entrar par_esq dec_funcao_esq par_dir
-  |{declara_estrutura_funcao} par_esq dec_funcao_esq par_dir;
+ inicio {-> a_dec_funcao*} =
+   {declaracao_de_funcao} dec_funcao* {-> [dec_funcao.a_dec_funcao]};
 
- dec_funcao_esq =
-   {declara_funcao_lado_esq} funcao tipo identificador par_esq parametros par_dir dec_funcao_dir;
+ dec_funcao {-> a_dec_funcao} =
+   {declara_funcao} entrar? [par_um_e]:par_esq funcao [esq]:tipo [mid_esq]:id [par_dois_e]:par_esq [mid_dir]:parametros? [par_dois_d]:par_dir dois_pontos [par_tres_e]:par_esq [dir]:exp [par_tres_d]:par_dir[par_um_d]:par_dir {-> New a_dec_funcao.a_declara_funcao(esq.a_tipo, mid_esq.a_id, [mid_dir.a_parametros], dir.a_exp)};
+
+ id {-> a_id} =
+   {identificadores} identificador {-> New a_id.a_identificadores(identificador)};
+
+ tipo {-> a_tipo} =
+   {inteiro} tipo_int {-> New a_tipo.a_inteiro(tipo_int)}
+  |{real} tipo_real {-> New a_tipo.a_real(tipo_real)}
+  |{boolean} tipo_bool {-> New a_tipo.a_boolean(tipo_bool)};
+
+ parametros {-> a_parametros*} =
+   {declarando_parametros} parametro lista_parametros* {-> [parametro.a_parametros, lista_parametros.a_parametros]};
+
+ lista_parametros {-> a_parametros} =
+   {declarando_mais_parametros} virgula parametro {-> parametro.a_parametros};
+
+ parametro {-> a_parametros} =
+   {parametro_simples} [esq]:tipo [dir]:id {-> New a_parametros.a_parametros_simples(esq.a_tipo, dir.a_id)}
+  |{parametro_assinatura} assinatura {-> assinatura.a_parametros};
+
+ assinatura {-> a_parametros} =
+   {assina} [esq]:tipo [mid]:id par_esq [dir]:parametros_assinatura? par_dir {-> New a_parametros.a_parametro_assinatura(esq.a_tipo, mid.a_id, [dir.a_parametros_assinatura])};
+
+ parametros_assinatura {-> a_parametros_assinatura*} =
+   {param_assinatura} parametro_assinatura cont_parametros_assinatura* {-> [parametro_assinatura.a_parametros_assinatura, cont_parametros_assinatura.a_parametros_assinatura]};
+
+ cont_parametros_assinatura {-> a_parametros_assinatura} =
+   {declarando_mais_param_assinatura} virgula parametro_assinatura {-> parametro_assinatura.a_parametros_assinatura};
+
+ parametro_assinatura {-> a_parametros_assinatura} =
+   {forma_tipo_assinatura} tipo {-> New a_parametros_assinatura.a_forma_tipo_assinatura(tipo.a_tipo)}
+  |{nova_assinatura} assinatura {-> New a_parametros_assinatura.a_nova_assinatura(assinatura.a_parametros)};
+
+ exp {-> a_exp} =
+   {ir_termos} termos {-> termos.a_exp};
    
- dec_funcao_dir =
-   {declara_funcao_lado_dir} dois_pontos par_esq exp par_dir;
-
- tipo =
-   {inteiro} tipo_int 
-  |{real} tipo_real
-  |{boolean} tipo_bool;
-
- parametros =
-   {declarando_parametros} parametro cont_parametros;
-
- cont_parametros =
-   {declarando_mais_parametros} virgula parametros
-  | ;
-
- parametro =
-   {parametro_simples} tipo identificador
-  |{parametro_assinatura} assinatura
-  | ;
-
- assinatura =
-   {assina} tipo identificador par_esq parametros_assinatura par_dir;
-
- parametros_assinatura =
-   {param_assinatura} parametro_assinatura cont_parametros_assinatura
-  | ;
+ termos {-> a_exp} =
+   {num_inteiros} numero_inteiro {-> New a_exp.a_num_inteiros(numero_inteiro)}
+  |{num_reais} numero_real {-> New a_exp.a_num_reais(numero_real)}
+  |{identificador_param} id {-> New a_exp.a_identificador(id.a_id)}
+  |{bool_verdade} verdade {-> New a_exp.a_bool_verdade(verdade)}
+  |{bool_falso} falso {-> New a_exp.a_bool_falso(falso)}
+  |{bloco_expressao} bloco_exp {-> bloco_exp.a_exp}
+  |{chamada_func} chamada {-> chamada.a_exp}
+  |{func_unica_lambda} lambda {-> lambda.a_exp};
   
- cont_parametros_assinatura =
-   {declarando_mais_param_assinatura} virgula parametros_assinatura
-  | ;
-
- parametro_assinatura =
-   {forma_tipo_assinatura} tipo
-  |{nova_assinatura} assinatura;
- 
- exp =
-   {comeco} estru_cond;
-
- estru_cond =
-   {ir_logico_ou} logico_ou
-  |{estru_se_senao} se bloco_exp estru_cond_entao senao exp;
-
- estru_cond_entao =
-   {estru_entao} entao exp;
-
- logico_ou =
-   {ir_logico_e} logico_e
-  |{op_ou} logico_ou ou logico_e;
-
- logico_e =
-   {ir_logico_negacao} logico_negacao
-  |{op_e} logico_e e logico_negacao;
-  
- logico_negacao =
-   {ir_relacionais} relacionais
-  |{op_neg} negacao_booleana relacionais;
-
- relacionais =
-   {ir_aritmeticos} aritmeticos
-  |{op_menor_que} relacionais menor_que aritmeticos
-  |{op_maior_que} relacionais maior_que aritmeticos
-  |{op_iguais} relacionais igual aritmeticos;
- 
- aritmeticos =
-   {prox_aritmeticos} cont_aritmeticos
-  |{soma} aritmeticos soma cont_aritmeticos
-  |{subtracao} aritmeticos subt cont_aritmeticos
-  |{negacao_aritmetica} subt cont_aritmeticos;
-  
- cont_aritmeticos =
-   {ir_termos} termos
-  |{multiplicacao} cont_aritmeticos mult termos
-  |{divisao} cont_aritmeticos div termos
-  |{modulo} cont_aritmeticos mod termos;
-  
- termos =
-   {num_inteiros} numero_inteiro
-  |{num_reais} numero_real
-  |{identificador_param} identificador
-  |{bool_verdade} verdade
-  |{bool_falso} falso
-  |{bloco_expressao} bloco_exp
-  |{chamada_func} chamada
-  |{func_unica_lambda} lambda;
-
- lambda =
-   {lado_esq_func} funcao_unica par_esq lista_ids par_dir lambda_dir;
+ dconstante {-> a_constante} =
+   {const} constante {-> New a_constante.a_const(constante)};
    
- lambda_dir =
-   {lado_dir_func} dois_pontos par_esq exp par_dir colch_e lista_exp colch_d;
-  
- chamada =
-   {estrut_chamada} identificador par_esq lista_exp par_dir;
-   
- lista_exp =
-   {novo_exp} exp cont_exp;
+ chamada {-> a_exp} =
+   {estrut_chamada} [esq]:id par_esq [dir]:lista_exp? par_dir {-> New a_exp.a_chamada(esq.a_id, [dir.a_exp])};
  
- cont_exp =
-   {mais_exp} virgula lista_exp
-  | ;
-
- lista_ids =
-   {novo_id} identificador cont_ids;
+ lista_exp {-> a_exp*} =
+   {lista_exp} [esq]:exp virgula [dir]:lista_exp {-> [esq.a_exp, dir.a_exp]} |
+   {exp} exp {-> [exp.a_exp]};
+      
+ lista_id {-> a_id*} =
+   {lista_id} [esq]:id virgula [dir]:lista_id {-> [esq.a_id, dir.a_id]} |
+   {id} id {-> [id.a_id]};
  
- cont_ids =
-   {mais_ids} virgula lista_ids
-  | ;
-  
- bloco_exp =
-   {estrutura} par_esq dec_cons* exp par_dir;
+ bloco_exp {-> a_exp} =
+   {estrutura} par_esq [esq]:lista_dec_cons* [dir]:exp par_dir {-> New a_exp.a_bloco_exp([esq.a_dec_cons], dir.a_exp)};
 
- dec_cons =
-   {estrutura_constante} par_esq conteudo_cons par_dir;
-   
- conteudo_cons =
-   {conteudo_declaracao_cons} constante tipo identificador par_esq exp par_dir;
+ lista_dec_cons {-> a_dec_cons*} =
+   {lista_dec_cons} dec_cons {-> [dec_cons.a_dec_cons]};
+
+ lambda {-> a_exp} =
+   {func_unica_lambda} funcao_unica [par_e_um]:par_esq [esq]:lista_id? [par_d_um]:par_dir dois_pontos [par_e_dois]:par_esq [mid]:exp [par_d_dois]:par_dir colch_e [dir]:lista_exp? colch_d {-> New a_exp.a_func_unica_lambda([esq.a_id], mid.a_exp, [dir.a_exp])};
+
+ dec_cons {-> a_dec_cons} =
+   {estrutura_constante} [par_um_e]:par_esq constante [esq]:tipo [mid]:id [par_dois_e]:par_esq [dir]:exp [par_dois_d]:par_dir [par_um_d]:par_dir {-> New a_dec_cons.a_estrutura_constante(esq.a_tipo, mid.a_id, dir.a_exp)};
+
+
+Abstract Syntax Tree
+programa =
+   a_dec_funcao*;
+
+a_dec_funcao = 
+	{a_declara_funcao} [esq]:a_tipo [mid_esq]:a_id [mid_dir]:a_parametros* [dir]:a_exp;
+
+a_parametros =
+	{a_parametros_simples} [esq]:a_tipo [dir]:a_id
+	|{a_parametro_assinatura} [esq]:a_tipo [mid]:a_id [dir]:a_parametros_assinatura*;
+
+a_parametros_assinatura =
+	{a_forma_tipo_assinatura} a_tipo
+	|{a_nova_assinatura} a_parametros;
+
+a_id =
+	{a_identificadores} identificador;
+
+a_tipo =
+	{a_inteiro} tipo_int 
+	|{a_real} tipo_real
+	|{a_boolean} tipo_bool;
+
+a_constante =
+	{a_const} constante;
+	
+a_dec_cons =
+	{a_estrutura_constante}[esq]:a_tipo [mid]:a_id [dir]:a_exp;
+  
+a_exp =
+	{a_num_inteiros} numero_inteiro
+	|{a_num_reais} numero_real
+	|{a_identificador} a_id
+	|{a_bool_verdade} verdade
+	|{a_bool_falso} falso
+	|{a_chamada} [esq]:a_id [dir]:a_exp*
+	|{a_func_unica_lambda} [esq]:a_id* [mid]:a_exp [dir]:a_exp*
+	|{a_bloco_exp}[esq]:a_dec_cons* [dir]:a_exp;
