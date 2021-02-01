@@ -135,7 +135,7 @@ Productions
 
  estru_cond {-> a_exp} =
    {ir_logico_ou} logico_ou {-> logico_ou.a_exp}
-  |{estru_se_senao} se [dir]:bloco_exp entao [mid]:exp senao [esq]:exp {-> New a_exp.a_se_cond(esq.a_exp, mid.a_exp, dir.a_exp)};
+  |{estru_se_senao} se [esq]:bloco_exp entao [mid]:exp senao [dir]:exp {-> New a_exp.a_se_cond(esq.a_exp, mid.a_exp, dir.a_exp)};
 
  logico_ou {-> a_exp} =
    {ir_logico_e} logico_e {-> logico_e.a_exp}
